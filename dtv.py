@@ -196,6 +196,7 @@ class main(QMainWindow):
         self.findStr = None
         self.foundList = []
         self.foundIndex = 0
+        self.last_chosen_directory = os.path.curdir
 
         if len(sys.argv) > 1:
             self.openDTSFile(sys.argv[1])
@@ -204,9 +205,12 @@ class main(QMainWindow):
 
         options = QFileDialog.Options()
         fileName, _ = QFileDialog.getOpenFileName(self,
-                                                  "Select a DTS file to visualise...",
-                                                  "", "All DTS Files (*.dts)",
+                                                  caption="Select a DTS file to visualise...",
+                                                  directory=self.last_chosen_directory,
+                                                  filter ="All DTS Files (*.dts)",
                                                   options=options)
+
+        self.last_chosen_directory = os.path.dirname(filePath)
         self.openDTSFile(fileName)
 
     def openDTSFile(self, fileName):
