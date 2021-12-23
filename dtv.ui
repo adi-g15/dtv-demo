@@ -244,6 +244,13 @@
      <string>&amp;File</string>
     </property>
     <addaction name="openDTS"/>
+    <addmenu name="openRecent"/>
+    <addaction name="separator"/>
+    <addaction name="exitApp"/>
+   </widget>
+   <widget class="QMenu" name="openRecent">
+    <addaction name="openDTS"/>
+    <addaction name="openRecentAction"/>
     <addaction name="separator"/>
     <addaction name="exitApp"/>
    </widget>
@@ -276,6 +283,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="openRecentAction">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Action wala...</string>
    </property>
   </action>
   <action name="exitApp">

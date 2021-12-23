@@ -414,6 +414,8 @@ class Main(QMainWindow):
     def load_ui(self):
         self.ui = loadUi('dtv.ui', self)
         self.ui.openDTS.triggered.connect(self.openDTSFileUI)
+        self.ui.openRecent
+        self.ui.openRecent.addAction(self.ui.openRecentAction)
         self.ui.exitApp.triggered.connect(self.close)
         self.ui.optionsSettings.triggered.connect(self.showSettings)
         self.ui.trwDT.currentItemChanged.connect(self.highlightSourceFile)
