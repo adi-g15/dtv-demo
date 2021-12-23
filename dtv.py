@@ -210,7 +210,7 @@ class main(QMainWindow):
                                                   filter ="All DTS Files (*.dts)",
                                                   options=options)
 
-        self.last_chosen_directory = os.path.dirname(filePath)
+        self.last_chosen_directory = os.path.dirname(fileName)
         self.openDTSFile(fileName)
 
     def openDTSFile(self, fileName):
