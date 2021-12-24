@@ -8,6 +8,8 @@
 > Saving list of recently opened files
 >
 > Not creating temporary/cache files in `$(cwd)`
+>
+> And a wild suggestion, maybe have a symlink in /usr/local/bin/dtv to dtv.py
 
 ## screenshots
 
