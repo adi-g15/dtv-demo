@@ -1,5 +1,14 @@
 # Device Tree Visualizer
 
+> Differences with upstream:
+> These are just minor changes i made for myself, all good logic is by bmx666
+>
+> Opening repeated file dialogs in last chosen directory
+>
+> Saving list of recently opened files
+>
+> Not creating temporary/cache files in `$(cwd)`
+
 ## screenshots
 
 DTV with original dtc

@@ -26,6 +26,11 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QDialog, QHe
 from PyQt5.uic import loadUi
 
 DELETED_TAG = "__[|>*DELETED*<|]__"
+try:
+    CACHE_DIR = BaseDirectory.save_cache_path("device-tree-visualiser")
+except:
+    print("Using current directory for temporary files", file=sys.stderr)
+    CACHE_DIR = os.path.curdir
 
 def getTopLevelItem(trwDT):
     return trwDT.topLevelItem(trwDT.topLevelItemCount()-1)
@@ -202,23 +207,37 @@ class Main(QMainWindow):
         self.findStr = None
         self.foundList = []
         self.foundIndex = 0
-        self.last_chosen_directory = os.path.curdir;
+        self.last_chosen_directory = Main.getLastChosenDirectory();
 
         if len(sys.argv) > 1:
-            self.openDTSFile(sys.argv[1])
+            if(os.path.isdir(sys.argv[1])):
+                self.last_chosen_directory = sys.argv[1]
+            else:
+                self.openDTSFile(sys.argv[1])
+
+    def getLastChosenDirectory():
+        file_path = os.path.join(CACHE_DIR, "lastchosen.txt")
+        if os.path.exists(file_path):
+            try:
+                return str(open(file_path).read()).strip()
+            except Exception as e:
+                print("Warning: Couldn't open lastchosen.txt: ", file=sys.stderr)
+
+        return os.path.curdir
+
+    def saveLastChosenDirectory(last_chosen_dir):
+        file_path = os.path.join(CACHE_DIR, "lastchosen.txt")
+        try:
+            open(file_path, 'w').write(last_chosen_dir)
+        except Exception as e:
+            print("Warning: Couldn't write to lastchosen.txt: ", file=sys.stderr)
 
     # Returns a dictionary, schema: {filename(str): timestamp(number)}
     # To get array of filenames, in order from newest (at index 0) to oldest, just use getRecentFilenames().values(), then .reverse()... It will NOT throw :)
     def getRecentFilenames():
-        try:
-            cache_dir = BaseDirectory.save_cache_path("device-tree-visualiser")
-        except:
-            print("Using current directory for temporary files", file=sys.stderr)
-            cache_dir = os.path.curdir
-
         recents = {}
         try:
-            with open( str(os.path.join(cache_dir, "recent.list")) ) as file:
+            with open( str(os.path.join(CACHE_DIR, "recent.list")) ) as file:
                 for line in file.readlines():
                     line = line.strip()
                     if line == "":
@@ -235,14 +254,7 @@ class Main(QMainWindow):
 
     def pushToRecentFilenames(filename):
         timestamp = int(time.time())
-
-        try:
-            cache_dir = BaseDirectory.save_cache_path("device-tree-visualiser")
-        except:
-            print("Using current directory for temporary files", file=sys.stderr)
-            cache_dir = os.path.curdir
-
-        recents_filepath = os.path.join(cache_dir, "recent.list")
+        recents_filepath = os.path.join(CACHE_DIR, "recent.list")
 
         # just 'touch' the file
         if not os.path.exists(recents_filepath):
@@ -254,6 +266,7 @@ class Main(QMainWindow):
         try:
             # If filename is not a relative/absolute path to existing file this may fail
             filepath = os.path.realpath(filename)
+            Main.saveLastChosenDirectory(os.path.dirname(filepath))
 
             # If `filename` is not present in `recents`, this will always be true, Else update with the newer timestamp
             # TODO: This is redundant for general cases, since `timestamp` will always be greater than existing timestamp since it would have been in the past

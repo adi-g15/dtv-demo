@@ -62,9 +62,8 @@ def annotateDTS(dtsFile, incIncludes, level = 5):
         print('stderr: {}'.format(e.stderr.decode(sys.getfilesystemencoding())))
         exit(e.returncode)
 
-    # Create a temporary file in the current working directory
-    (tmpAnnotatedFile, tmpAnnotatedFileName) = tempfile.mkstemp(dir=os.path.dirname(os.path.realpath(__file__)),
-                                                                prefix=os.path.basename(dtsFile) + '-',
+    # Create a temporary file
+    (tmpAnnotatedFile, tmpAnnotatedFileName) = tempfile.mkstemp(prefix=os.path.basename(dtsFile) + '-',
                                                                 suffix='.dts.annotated')
     with os.fdopen(tmpAnnotatedFile, 'w') as output:
         output.write(dtcResult.stdout.decode('utf-8') )
