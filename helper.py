@@ -11,7 +11,7 @@ def loadConfig(baseDirPath):
 
     # Load configuration for the conf file
     config = configparser.ConfigParser()
-    config.read('dtv.conf')
+    config.read(os.path.join(os.path.dirname(__file__),'dtv.conf'))
 
     # Add or remove projects from this list
     # Only the gerrit-events of changes to projects in this list will be processed.

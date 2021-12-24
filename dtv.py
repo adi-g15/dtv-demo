@@ -438,7 +438,7 @@ class Main(QMainWindow):
         self.move(frameGm.topLeft())
 
     def load_ui(self):
-        self.ui = loadUi('dtv.ui', self)
+        self.ui = loadUi( os.path.join(os.path.dirname(os.path.realpath(__file__)), 'dtv.ui'), self)
         self.ui.openDTS.triggered.connect(self.openDTSFileUI)
         self.ui.exitApp.triggered.connect(self.close)
         self.ui.optionsSettings.triggered.connect(self.showSettings)

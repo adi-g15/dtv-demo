@@ -1,7 +1,7 @@
 # Device Tree Visualizer
 
 > Differences with upstream:
-> These are just minor changes i made for myself, all good logic is by bmx666
+> These are just minor changes i made for myself, all good logic is by [bmx666](https://github.com/bmx666/dtv-demo) & [TheCodeArtist](https://github.com/TheCodeArtist/dtv-demo)
 >
 > Opening repeated file dialogs in last chosen directory
 >
@@ -9,7 +9,9 @@
 >
 > Not creating temporary/cache files in `$(cwd)`
 >
-> And a wild suggestion, maybe have a symlink in /usr/local/bin/dtv to dtv.py
+> And a wild suggestion, maybe have a symlink in /usr/local/bin/dtv to dtv.py (the paths have been updated so this will work fine)
+
+Only .dts files supported, rest will cause panic :)
 
 ## screenshots
 
